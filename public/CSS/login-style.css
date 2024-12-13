@@ -1,0 +1,152 @@
+body {
+    display: flex;
+    background-color: gainsboro;
+    justify-content: center;
+    vertical-align: middle;
+    align-items: center;
+    height: 700px;
+}
+
+.logo {
+    display: inline;
+}
+
+img {
+    width: 50%;
+    height: 50%;
+    margin-left: 19px;
+    margin-top: 108px;
+}
+
+.logo_txt {
+    color: white;
+    display: inline;
+    position: absolute;
+    top: 176px;
+    /* left: 266px; */
+    font-size: 2em;
+    font-weight: lighter;
+    opacity: 0.7;
+}
+
+@media only screen and (max-width: 1220px) {
+    .logo_txt {
+        font-size: 1.5em;
+    }
+}
+
+@media only screen and (max-width: 771px) {
+    .container_one {
+        display: none !important;
+    }
+    .container_two {
+        width: 100% !important;
+    }
+}
+
+@media only screen and (max-width: 956px) {
+    .logo_txt {
+        font-size: 1em;
+    }
+}
+
+h3 {
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+    margin-top: 51px;
+    margin-bottom: 0;
+}
+
+label {
+    font-size: 20px;
+    font-weight: lighter;
+}
+
+input {
+    border-radius: 10px;
+    border: 1px;
+    width: 70%;
+}
+
+/* .error_msg {
+    color: red; 
+    font-size: smaller;
+} */
+
+#submit {
+    width: 74%;
+    font-size: 17px;
+    height: 35px;
+}
+
+/* Real-Time Data Styles */
+.real_data {
+    margin: 10px;
+    font-size: large;
+    display: none;
+    border: 1px solid;
+    padding: 10px;
+    width: 100%;
+    height: fit-content;
+    position: fixed;
+    top: -10px;
+    background-color: white;
+    z-index: 999;
+    text-align: center;
+}
+
+.real_data_list {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-content: center;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.real_data_list_item{
+    margin: 0 13px;
+}
+
+
+.log-in-container {
+    display: flex;
+    justify-content: space-around;
+    border: 1px solid;
+    width: 70%;
+    height: 463px;
+}
+
+.ctn {
+    border: 0.5px solid;
+}
+
+.container_one {
+    background-color: #78b3ab;
+    width: 50%;
+}
+
+.container_two {
+    width: 50%;
+}
+
+form {
+    padding-left: 16%;
+    padding-top: 5%;
+}
+
+.details {
+    display: block;
+    padding: 10px;
+    margin: 10px;
+}
+
+.btn-submit {
+    margin-top: 30px;
+}
+
+.btn-submit:hover {
+    cursor: pointer;
+    background-color: aliceblue;
+}

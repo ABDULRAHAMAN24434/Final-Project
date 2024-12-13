@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../CSS/login-style.css">
+    <title>Log IN </title>
+</head>
+<body>
+    <!-- Real-Time Data Display for Login -->
+    <div class="real_data" id="real_data">
+        <ul class="real_data_list">
+            <li class="real_data_list_item"><span class="real_time_update" name="email"></span></li>
+            <li class="real_data_list_item"><span class="real_time_update" name="password"></span></li>
+        </ul>
+    </div>
+    <div class="log-in-container">
+        <div class="container_one ctn" style="position: relative;">
+            <div class="logo"><img src="../pictures/icons8-health-80.png" alt="logo"></div>
+            <h1 class="logo logo_txt">ID TELEMED</h1>
+        </div>
+        <div class="container_two ctn">
+            <h3>LOG IN</h3>
+            <form action="#" method="get/post" id="login_form" oninput="real_time_login_data()">
+                <label class="details" for="email" style="margin: 0;">Email</label>
+                <input class="details" type="email" id="email" name="email" required>
+                <span class="error_msg" id="email_error"></span>
+
+                <label class="details" for="password" style="margin: 0;">Password</label>
+                <input class="details" type="password" id="password" name="password" required>
+                <span class="error_msg" id="password_error"></span>
+
+                <input class="details btn-submit" type="submit" name="submit" id="submit" onclick="log_in_validation(event)" style="width: 70px;">
+            </form>
+        </div>
+    </div>
+<script src="../Javascript/log-in.js"></script>
+</body>
+</html>

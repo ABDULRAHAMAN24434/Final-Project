@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patient Dashboard</title>
+  <link rel="stylesheet" href="../CSS/main.css">
+</head>
+<body>
+  <div class="dashboard">
+    <!-- Header -->
+    <header class="header">
+      <button id="sidebar-toggle" aria-label="Toggle Sidebar" class="hidden">☰</button>
+      <h1 id="header-title">Dashboard</h1>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" role="navigation" aria-hidden="true"  aria-labelledby="sidebar-toggle">
+      <ul>
+        <li onclick="showContent('profile')">Profile</li>
+        <li onclick="showContent('booking')">Booking</li>
+        <li onclick="showContent('appointments')">Appointments</li>
+        <li onclick="showContent('delete')">Delete</li>
+      </ul>
+    </aside>
+
+    <div id="loading-indicator" class="hidden">
+      <p>Loading...</p>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content" id="main-content">
+      <!-- Default view could be profile -->
+      <div id="profile" class="content-section active">
+        <div class="profileDisplay one">
+          <ul>
+            <li style="text-align: center;">
+              <img src="../pictures/anonymousDp.jpg" alt="<%= user.name %>'s profile picture" class="profile-photo">
+              <h3><%= user.first_name + ' ' + user.last_name %></h3>
+            </li>
+            <li>
+              <p><strong>Contacts</strong></p>
+              <p><%= user.email %></p>
+              <p><%= user.phone %></p>
+            </li>
+            <li>
+              <p><strong>Gender</strong></p>
+              <%= user.gender %>
+            </li>
+          </ul>
+        </div>
+
+        <div class="profileDisplay two">
+          <h2>Profile Information</h2>
+          <div id="profile-view">
+            <button class="updateProfileButton" onclick="toggleEditProfile()">Update Profile</button>
+            <p><strong>Name:</strong> <%= user.first_name + ' ' + user.last_name %></p>
+            <p><strong>Email:</strong> <%= user.email %></p>
+            <p><strong>Gender:</strong> <%= user.gender %></p>
+            <p><strong>Date of Birth:</strong> <%= user.dob %></p>
+            <p><strong>Address:</strong> <%= user.address %></p>
+            <p><strong>Phone:</strong> <%= user.phone %></p>
+          </div>
+          <div>
+            <!-- Editable profile form, hidden by default -->
+            <form id="profile-edit" style="display: none;">
+              <button style="background-color: #78b3ab;"  id="discardButton" type="submit" onclick="toggleEditProfile()">Discard Changes</button>
+
+              <label for="first_name">Name:</label>
+              <input type="text" id="first_name" name="first_name" value="<%= user.first_name %>" required>
+
+              <label for="last_name">Name:</label>
+              <input type="text" id="last_name" name="last_name" value="<%= user.last_name  %>" required>
+            
+              <label for="email">Email:</label>
+              <input type="email" id="user_email" name="email" value="<%= user.email %>" required>
+            
+              <label for="gender">Gender:</label>
+              <input type="text" id="user_gender" name="gender" value="<%= user.gender %>">
+            
+              <label for="dof">Date of Birth:</label>
+              <input type="date" id="user_dof" name="dof" value="<%= user.dob %>">
+            
+              <label for="address">Address:</label>
+              <input type="text" id="user_address" name="address" value="<%= user.address %>">
+            
+              <label for="phone">Phone:</label>
+              <input type="tel" id="user_phone" name="phone" value="<%= user.phone %>">
+            
+              <button style="background-color: #78b3ab;" type="submit" onclick="saveChanges('<%= user.patient_id %>')" class="saveChangesBtn">Save Changes</button>
+            </form>
+          </div>
+
+        </div>
+               
+      </div>
+      
+      <div id="booking" class="content-section">
+        <h2>Doctors</h2>
+        <% for (let doctor of doctors) {%>
+        <div class="profileDisplay one" style="margin: 20px 0;">
+          <ul>
+            <li style="text-align: center;">
+              <img src="../pictures/anonymousDp.jpg" alt="User Photo" class="profile-photo">
+              <h3><%= doctor.first_name + ' ' + doctor.last_name %></h3>
+              <p><strong><%= doctor.specialization %></strong></p>
+            </li>
+            <li>
+              <p><strong>Contacts</strong></p>
+              <p><%= doctor.email %></p>
+              <p><%= doctor.phone %></p>
+            </li>
+            <li>
+              <p><strong>Schedule</strong></p>
+              <% if (doctor.schedule) { %>
+                <% for (const [key, value] of Object.entries(JSON.parse(doctor.schedule))) { %>
+                  <p><%= key %>: <%= value %></p>
+                <% } %>
+              <% } else { %>
+                <p>No schedule available</p>
+              <% } %>
+            </li>
+            
+          </ul>
+          <div class="bookAppointment">
+            <form action="#" method="post" class="appointmentForm" id="appointmentForm-<%= doctor.doctor_id %>" data-patient-id="<%= user.patient_id %>">
+              <!-- Day Selector -->
+              <div class="formGroup">
+                <label for="day-<%= doctor.doctor_id %>">Select Day:</label>
+                <select name="day" id="day-<%= doctor.doctor_id %>">
+                  <% if (doctor.schedule) { %>
+                    <% try { %>
+                      <% for (const [key, value] of Object.entries(JSON.parse(doctor.schedule))) { %>
+                        <p><%= key %>: <%= value %></p>
+                      <% } %>
+                    <% } catch (error) { %>
+                      <p>Invalid schedule format</p>
+                    <% } %>
+                  <% } else { %>
+                    <option value="">No schedule available</option>
+                  <% } %>
+                </select>
+              </div>
+            
+              <!-- Time Selector -->
+              <div class="formGroup">
+                <label for="time-<%= doctor.doctor_id %>">Select Time:</label>
+                <select name="time" id="time-<%= doctor.doctor_id %>">
+                  <% if (doctor.schedule) { %>
+                    <% let timeList = []; %>
+                    <% for (const [key, value] of Object.entries(JSON.parse(doctor.schedule))) { %>
+                      <% let timeSplit = value.split("-"); %>
+                      <% for (let time of timeSplit) { %>
+                        <% timeList.push(parseInt(time, 10)); %>
+                      <% } %>
+                      <% break; %>
+                    <% } %>
+                    <% timeList.sort((a, b) => a - b); %>
+                    <% for (let i = timeList[0]; i <= timeList[1]; i++) { %>
+                      <option value="<%= i %>"><%= i %>:00</option>
+                    <% } %>
+                  <% } else { %>
+                    <option value="">No time available</option>
+                  <% } %>
+                </select>
+              </div>
+            
+              <div class="formGroup">
+                <label for="date-<%= doctor.doctor_id %>">Select Date:</label>
+                <input type="date" id="date-<%= doctor.doctor_id %>" required>
+              </div>
+            
+              <!-- Submit Button -->
+              <button type="submit" class="bookButton">Book Appointment</button>
+            </form>
+            
+            
+          </div>
+          
+
+        </div>
+        <% }%>
+      </div>
+
+      <!-- Appointments Section -->
+      <div class="appointments content-section" id="appointments">
+        <h2>Upcoming Appointments</h2>
+        <table id="appointmentsTable">
+          <thead>
+            <tr>
+              <th>Appointment Date</th>
+              <th>Appointment Time</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for (let appointment of appointments) { %>
+              <% if (appointment.patient_id === user.patient_id) { %>
+                  <% 
+                      const date = new Date(appointment.appointment_date);
+                      const formattedDate = date.getFullYear() + '-' + 
+                                            String(date.getMonth() + 1).padStart(2, '0') + '-' + 
+                                            String(date.getDate()).padStart(2, '0');
+                  %>
+                <tr>
+                  <td><%= formattedDate %></td>
+                  <td><%= appointment.appointment_time %></td>
+                  <td><%= appointment.status %></td>
+                  <td>
+                    <button onclick="openRescheduleForm('<%= appointment.appointment_id %>')">Reschedule</button>
+                    <button onclick="cancelAppointment('<%= appointment.appointment_id %>')">Cancel</button>
+                  </td>
+                </tr>
+              <% } %>
+            <% } %>
+          </tbody>
+          
+        </table>
+      </div>
+      <!-- Reschedule Modal -->
+      <div id="rescheduleModal" class="modal">
+        <div class="modal-content">
+          <span class="close" onclick="closeRescheduleForm()">&times;</span>
+          <h3>Reschedule Appointment</h3>
+          <form action="#" method="POST" id="reappointmentForm">
+            <input type="hidden" id="appointmentId" name="appointmentId">
+            <label for="newAppointmentDate">New Date:</label>
+            <input type="date" id="newAppointmentDate" name="newAppointmentDate" required>
+            
+            <label for="newAppointmentTime">New Time:</label>
+            <input type="time" id="newAppointmentTime" name="newAppointmentTime" required>
+            
+            <button type="submit">Save Changes</button>
+            <button type="button" onclick="closeRescheduleForm()">Cancel</button>
+          </form>
+        </div>
+      </div>
+
+
+      <div id="delete" class="content-section deleteSection">
+        <h2>Delete Account</h2>
+        <p class="warningText">
+            Deleting your account is irreversible. All your data will be permanently removed. Proceed with caution.
+        </p>
+        <input type="hidden" id="delUserID" value="<%= user.patient_id %>">
+        <button type="button" class="deleteButton">Delete Account</button>
+    </div>
+    
+      
+    </main>
+  </div>
+
+  <script src="../Javascript/main.js"></script>
+</body>
+</html>

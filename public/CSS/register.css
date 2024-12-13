@@ -1,0 +1,184 @@
+/* General body styling */
+body {
+    display: flex;
+    flex-direction: column;
+    background-color: gainsboro;
+    justify-content: center;
+    vertical-align: middle;
+    align-items: center;
+    height: fit-content;
+}
+
+/* Heading styling */
+h3 {
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+    margin-top: 51px;
+    margin-bottom: 0;
+}
+
+/* Label styling */
+label {
+    font-size: 20px;
+    font-weight: lighter;
+}
+
+/* Input fields styling (including new ones) */
+input.details, select.details, textarea.details {
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    width: 70%;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+/* Styling for textarea (Address field) */
+textarea.details {
+    resize: vertical; /* Allows vertical resizing */
+    height: 100px;
+}
+
+/* Submit button styling */
+#submit {
+    width: 74%;
+    font-size: 17px;
+    height: 35px;
+}
+
+/* Real-time data display box */
+.real_data {
+    margin: 10px;
+    font-size: large;
+    display: none;
+    border: 1px solid;
+    padding: 10px;
+    width: 100%;
+    height: fit-content;
+    position: fixed;
+    top: -10px;
+    background-color: white;
+    z-index: 999;
+    text-align: center;
+}
+
+/* Styling for the list inside real-time data */
+.real_data_list {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-content: center;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.real_data_list_item {
+    margin: 0 13px;
+}
+
+/* Main form container styling */
+.log-in-container {
+    display: flex;
+    justify-content: space-around;
+    border: 1px solid;
+    width: 70%;
+    height: fit-content;
+    position: absolute;
+    top: 132px;
+}
+
+@media only screen and (max-width: 373px) {
+    .log-in-container {
+        top: 210px;
+    }
+}
+
+/* Form container */
+.container_two {
+    width: 100%;
+    height: fit-content;
+}
+
+/* General form styling */
+form {
+    padding-left: 16%;
+    padding-top: 5%;
+}
+
+/* Form field block and padding */
+.details {
+    display: block;
+    padding: 10px;
+    margin: 10px;
+}
+
+/* Submit button margin */
+.btn-submit {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.btn-submit:hover {
+    cursor: pointer;
+    background-color: gainsboro;
+}
+
+/* Gender radio buttons */
+#male, #female, #checkbox {
+    display: inline;
+    width: auto;
+}
+
+/* Inline female gender option */
+.female_gen {
+    display: inline;
+}
+
+@media only screen and (max-width: 457px) {
+    .female_gen {
+        display: block;
+    }
+}
+
+/* Error message styling */
+.error_msg {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+    display: block;
+}
+
+/* Real-time updates inside form */
+.real_time_update {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* Country select dropdown styling */
+select.details {
+    padding: 8px;
+    margin-top: 10px;
+}
+
+/* Styling for form validation with small screens */
+@media (max-width: 768px) {
+    input.details, select.details, textarea.details {
+        width: 70%; /* Ensure the form fields are responsive */
+    }
+
+    #submit {
+        width: 70%; /* Button responsive on smaller screens */
+    }
+}
+
+/* Extra styles for mobile optimization */
+@media (max-width: 480px) {
+    body {
+        padding: 0 20px; /* Add some padding for smaller screens */
+    }
+
+    form {
+        padding-left: 5%;
+    }
+}

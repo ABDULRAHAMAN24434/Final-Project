@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="../CSS/main.css">
+</head>
+<body>
+  <div class="dashboard">
+    <!-- Header -->
+    <header class="header">
+      <button id="sidebar-toggle" aria-label="Toggle Sidebar" class="hidden">☰</button>
+      <h1 id="header-title">Dashboard</h1>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" role="navigation" aria-hidden="true"  aria-labelledby="sidebar-toggle">
+      <ul>
+        <li onclick="showContent('profile')">Profile</li>
+        <li onclick="showContent('patients')">Patients</li>
+        <li onclick="showContent('addDoctors')">Add Doctors</li>
+      </ul>
+    </aside>
+
+    <div id="loading-indicator" class="hidden">
+      <p>Loading...</p>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content" id="main-content">
+      <!-- Default view could be profile -->
+      <div id="profile" class="content-section active">
+        <div class="profileDisplay one">
+          <ul>
+            <li>
+              <img src="../pictures/anonymousDp.jpg" alt="<%= user.name %>'s profile picture" class="profile-photo">
+              <h3><%= user.username %></h3>
+            </li>
+            <li>
+              <p><%= user.email %></p>
+            </li>
+            <li><%= user.gender %></li>
+          </ul>
+        </div>
+        <div class="profileDisplay two">
+          <h2>Profile Information</h2>
+          <div id="profile-view">
+            <button class="updateProfileButton" onclick="toggleEditProfile()">Update Profile</button>
+            <p><strong>Name:</strong> <%= user.username %></p>
+            <p><strong>Email:</strong> <%= user.email %></p>
+            <p><strong>Role:</strong> <%= user.role %></p>
+          </div>
+          <div>
+            <!-- Editable profile form, hidden by default -->
+            <form id="profile-edit" style="display: none;">
+              <button style="background-color: #78b3ab;"  id="discardButton" type="submit" onclick="toggleEditProfile()">Discard Changes</button>
+
+              <label for="name">Username:</label>
+              <input type="text" id="name" name="name" value="<%= user.username %>" required>
+            
+              <label for="email">Email:</label>
+              <input type="email" id="email" name="email" value="<%= user.email %>" required>
+            
+              <label for="text">Role:</label>
+              <input type="text" id="role" name="role" value="<%= user.role %>">
+            
+              <button style="background-color: #78b3ab;" type="submit" onclick="saveAdminChanges('<%= user.admin_id %>')" class="saveChangesBtn">Save Changes</button>
+            </form>
+          </div>
+
+        </div>
+               
+      </div>
+
+      <div class="dashboard content-section" id="patients">
+        <!-- Filter Section -->
+        <div class="filter-section">
+          <label for="genderFilter">Filter by Gender:</label>
+          <select id="genderFilter" onchange="filterPatients()">
+            <option value="all">All</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+      
+          <label for="lastNameFilter">Filter by Last Name:</label>
+          <input type="text" id="lastNameFilter" placeholder="Enter last name" oninput="filterPatients()" />
+        </div>
+      
+        <!-- Patients Table -->
+        <div class="patients-section">
+          <table id="patientsTable">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Date of Birth</th>
+                <th>Gender</th>
+                <th>Address</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% patients.forEach(patient => { %>
+                <tr 
+                  data-gender="<%= patient.gender ? patient.gender.toLowerCase() : '' %>" 
+                  data-lastname="<%= patient.last_name ? patient.last_name.toLowerCase() : '' %>">
+                  <td><%= patient.patient_id %></td>
+                  <td><%= patient.first_name %></td>
+                  <td><%= patient.last_name %></td>
+                  <td><%= patient.email %></td>
+                  <td><%= patient.phone %></td>
+                  <td><%= new Date(patient.date_of_birth).toLocaleDateString('en-CA') %></td>
+                  <td><%= patient.gender %></td>
+                  <td><%= patient.address %></td>
+                </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
+        
+        
+      </div>
+
+      <div id="addDoctors" class="content-section">
+        <h2>Add New Doctor</h2>
+        <form id="addDoctorForm" method="post" action="#">
+          <!-- First Name -->
+          <label for="firstName">First Name:</label>
+          <input type="text" id="firstName" name="first_name" placeholder="Enter first name" required>
+          
+          <!-- Last Name -->
+          <label for="lastName">Last Name:</label>
+          <input type="text" id="lastName" name="last_name" placeholder="Enter last name" required>
+          
+          <!-- Specialization -->
+          <label for="specialization">Specialization:</label>
+          <input type="text" id="specialization" name="specialization" placeholder="Enter specialization" required>
+          
+          <!-- Email -->
+          <label for="email">Email:</label>
+          <input type="email" id="newEmail" name="email" placeholder="Enter email" required>
+          
+          <!-- Phone -->
+          <label for="phone">Phone:</label>
+          <input type="tel" id="phone" name="phone" placeholder="Enter phone number" required>
+          
+          <!-- Schedule -->
+          <label for="schedule">Schedule (JSON):</label>
+          <textarea id="schedule" name="schedule" placeholder='e.g., {"Monday": "09:00-17:00", "Wednesday": "09:00-15:00"}' required></textarea>
+
+          <label for="password">Password:</label>
+          <input type="password" id="newPassword" name="password" placeholder="Enter password" required>
+          
+          <!-- Submit Button -->
+          <button type="submit">Add Doctor</button>
+        </form>
+      </div>
+      
+      
+      
+      
+    </main>
+  </div>
+
+  <script src="../Javascript/main.js"></script>
+</body>
+</html>

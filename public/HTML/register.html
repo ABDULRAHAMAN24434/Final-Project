@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../CSS/register.css">
+    <title>Register</title>
+</head>
+<body>
+    <div class="real_data" id="real_data">
+        <ul class="real_data_list">
+            <li class="real_data_list_item"><span class="real_time_update" name="first_name"></span></li>
+            <li class="real_data_list_item"><span class="real_time_update" name="last_name"></span></li>
+            <li class="real_data_list_item"><span class="real_time_update" name="email"></span></li>
+            <li class="real_data_list_item"><span class="real_time_update" name="phone"></span></li>
+            <li class="real_data_list_item"><span class="real_time_update" name="password"></span></li>
+            <li class="real_data_list_item"><span class="real_time_update" name="password_confirmation"></span></li>
+            <li class="real_data_list_item"><span class="real_time_update" name="age"></span></li>
+            <li class="real_data_list_item"><span class="real_time_update" name="gender"></span></li>
+            <li class="real_data_list_item"><span class="real_time_update" name="dob"></span></li>
+            <li class="real_data_list_item"><span class="real_time_update" name="address"></span></li>
+            <li class="real_data_list_item"><span class="real_time_update" name="Country"></span></li>
+            <li class="real_data_list_item"><span class="real_time_update" name="Terms_and_conditions"></span></li>
+        </ul>
+    </div>
+    
+    <div class="log-in-container">
+        <div class="container_two ctn">
+            <h3>REGISTER</h3>
+            <form action="#" method="get/post" id="form" oninput="real_time_data()">
+                
+                <!-- First Name Field -->
+                <label class="details" for="first_name" style="margin: 0;">First Name</label>
+                <input class="details" type="text" id="first_name" name="first_name" required>
+                <span class="error_msg" id="first_name_error"></span>
+
+                <!-- Last Name Field -->
+                <label class="details" for="last_name" style="margin: 0;">Last Name</label>
+                <input class="details" type="text" id="last_name" name="last_name" required>
+                <span class="error_msg" id="last_name_error"></span>
+
+                <!-- Email Field -->
+                <label class="details" for="email" style="margin: 0;">Email</label>
+                <input class="details" type="email" id="email" name="email" required>
+                <span class="error_msg" id="email_error"></span>
+
+                <!-- Phone Field -->
+                <label class="details" for="phone" style="margin: 0;">Phone</label>
+                <input class="details" type="text" id="phone" name="phone">
+                <span class="error_msg" id="phone_error"></span>
+
+                <!-- Password Fields -->
+                <label class="details" for="password" style="margin: 0;">Password</label>
+                <input class="details" type="password" id="password" name="password" required>
+                <span class="error_msg" id="password_error"></span>
+
+                <label class="details" for="confirm_pswd" style="margin: 0;">Confirm Password</label>
+                <input class="details" type="password" id="confirm_pswd" name="password_confirmation" required>
+                <span class="error_msg" id="confirm_pswd_error"></span>
+
+                <!-- Age Field -->
+                <label class="details" for="age" style="margin: 0;">Age</label>
+                <input class="details" type="number" id="age" name="age" required>
+                <span class="error_msg" id="age_error"></span><br>
+
+                <!-- Date of Birth Field -->
+                <label class="details" for="dob" style="margin: 0;">Date of Birth</label>
+                <input class="details" type="date" id="dob" name="dob">
+                <span class="error_msg" id="dob_error"></span><br>
+
+                <!-- Address Field -->
+                <label class="details" for="address" style="margin: 0;">Address</label>
+                <textarea class="details" id="address" name="address" rows="4"></textarea>
+                <span class="error_msg" id="address_error"></span><br>
+
+                <!-- Gender Radio Buttons -->
+                <input class="details" type="radio" name="gender" value="Male" id="male" class="male gender">
+                <label class="details" for="male" style="display: inline;">Male</label>
+                <input class="details" type="radio" name="gender" id="female" value="Female" class="female gender">
+                <label class="details" for="female" style="display: inline;">Female</label>
+
+                <!-- Country Dropdown -->
+                <label class="details" for="country">Select your country:</label>
+                <select class="details" id="country" name="country">
+                  <option value="">--Select a Country--</option>
+                  <option value="KE">Kenya</option>
+                  <option value="ZA">South Africa</option>
+                  <option value="ZM">Zambia</option>
+                  <option value="NG">Nigeria</option>
+                  <option value="GH">Ghana</option>
+                  <option value="UG">Uganda</option>
+                  <option value="RW">Rwanda</option>
+                </select>
+
+                <!-- Terms and Conditions -->
+                <input class="details" type="checkbox" value="agreed" id="checkbox" name="Terms_and_conditions" required>
+                <label class="details" for="checkbox" style="display: inline;">Terms and Conditions</label><br>
+                <span class="error_msg" id="agreement_error"></span>
+
+                <!-- Submit Button -->
+                <input class="details btn-submit" type="submit" name="submit" id="submit" onclick="validation(event)">
+            </form>
+        </div>
+    </div>
+
+<script src="../Javascript/register.js"></script>
+</body>
+</html>
